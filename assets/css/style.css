@@ -10,6 +10,34 @@ body {
   margin-top: 50px;
 }
 
+.question {}
+
+.answers {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+}
+
+.answers div {
+  border: 1px solid transparent;
+  border-radius: 5px;
+  color: white;
+  padding: 3px 6px;
+  cursor: pointer;
+}
+
+.yes-answer {
+  background-color: green;
+}
+
+.no-answer {
+  background-color: red;
+}
+.selected-answer{
+  border: 2px solid rgb(14, 255, 14) !important;
+}
+
 .board {
   display: grid;
   grid-template-columns: repeat(3, 100px);
@@ -66,7 +94,8 @@ body {
   cursor: pointer;
   border-bottom-color: gray;
 }
-.selected-player{
- border-bottom-color: green;
- border-bottom-width: 4px ;
+
+.selected-player {
+  border-bottom-color: green;
+  border-bottom-width: 4px;
 }

@@ -1,39 +1,42 @@
 <!DOCTYPE html>
 <html lang="az">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tic-Tac-Toe</title>
-  <link rel="stylesheet" href="./assets/css/style.css">
-</head>
-<body>
-  <div class="modal">
-    <p>dostunla oynamaq isteyirsenmi?</p>
-    <div class="yes-answer">yes</div>
-    <div class="no-answer">no</div>
-  </div>
-  <div class="game-container">
-    <h1>Tic-Tac-Toe</h1>
-    <div class="players-select">
-        <div class="player">X</div>
-        <div class="player">O</div>
-    </div>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Tic-Tac-Toe</title>
+        <link rel="stylesheet" href="./assets/css/style.css">
+    </head>
+    <body>
+        <h1>Tic-Tac-Toe</h1>
 
-    <div class="board">
-      <div class="cell" data-index="0"></div>
-      <div class="cell" data-index="1"></div>
-      <div class="cell" data-index="2"></div>
-      <div class="cell" data-index="3"></div>
-      <div class="cell" data-index="4"></div>
-      <div class="cell" data-index="5"></div>
-      <div class="cell" data-index="6"></div>
-      <div class="cell" data-index="7"></div>
-      <div class="cell" data-index="8"></div>
-    </div>
-    <button id="reset">Start again</button>
-    <p id="status"></p>
-  </div>
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
-  <script src="./assets/js/script.js"></script>
-</body>
+        <p class="question">Do you want to play with your friend?</p>
+        <div class="answers">
+            <div class="yes-answer answer">Yes</div>
+            <div class="no-answer answer">No</div>
+        </div>
+
+
+        <div class="game-container">
+            <div class="players-select">
+                <div class="player">X</div>
+                <div class="player">O</div>
+            </div>
+
+            <div class="board">
+                <div class="cell" data-index="0"></div>
+                <div class="cell" data-index="1"></div>
+                <div class="cell" data-index="2"></div>
+                <div class="cell" data-index="3"></div>
+                <div class="cell" data-index="4"></div>
+                <div class="cell" data-index="5"></div>
+                <div class="cell" data-index="6"></div>
+                <div class="cell" data-index="7"></div>
+                <div class="cell" data-index="8"></div>
+            </div>
+            <button id="reset">Start again</button>
+            <p id="status"></p>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+        <script src="./assets/js/script.js"></script>
+    </body>
 </html>

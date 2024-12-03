@@ -41,34 +41,93 @@ let board = [
     "",
     ""
 ];
-let isGameActive = true;
 let isGameStarted = false;
 const yesAnswer = document.querySelector('.yes-answer')
 const noAnswer = document.querySelector('.no-answer');
+const answers = document.querySelectorAll(".answer")
 let isAi = false;
-noAnswer.addEventListener('click', function () {
-    isAi = true
-})
-yesAnswer.addEventListener("click", function () {
-    isAi = false;
-})
+
 // Event listener for selecting players
+// function selectPlayer() {
+//     if (isGameStarted)  return;
+
+//     else{
+//         answers.forEach((answer)=>{
+//             answer.addEventListener("click",function(){
+//                 answers.forEach(a => a.classList.remove("selected-answer"))
+//                 answer.classList.add("selected-answer")
+//                 isGameStarted = true;
+
+//             })
+//         })
+    
+//         noAnswer.addEventListener('click', function () {
+//             isAi = true;
+//         })
+    
+//         yesAnswer.addEventListener("click", function () {
+//             isAi = false;
+//         })
+
+//         players.forEach((player) => {
+//             player.addEventListener("click", function () {
+    
+//                 players.forEach(p => p.classList.remove("selected-player"))
+    
+//                 player.classList.add("selected-player");
+//                 currentPlayer = player.textContent;
+//                 isGameStarted = true;
+//             });
+//         });
+//     }
+  
+
+// }
 function selectPlayer() {
+    if (isGameStarted) return;
+
+    answers.forEach((answer) => {
+        answer.addEventListener("click", function () {
+            if (isGameStarted) return; 
+            answers.forEach((a) => a.classList.remove("selected-answer"));
+            answer.classList.add("selected-answer");
+
+            if (answer === noAnswer) {
+                isAi = true;
+            } else if (answer === yesAnswer) {
+                isAi = false;
+            }
+        });
+    });
+
     players.forEach((player) => {
         player.addEventListener("click", function () {
-            if (isGameStarted) 
-                return;
-            
-
-
-            players.forEach(p => p.classList.remove("selected-player"))
+            if (isGameStarted || !isAnswerSelected()) return; 
+            players.forEach((p) => p.classList.remove("selected-player"));
 
             player.classList.add("selected-player");
             currentPlayer = player.textContent;
             isGameStarted = true;
 
+            disableSelection();
         });
     });
+}
+
+function disableSelection() {
+    answers.forEach((answer) => (answer.style.pointerEvents = "none"));
+    players.forEach((player) => (player.style.pointerEvents = "none"));
+}
+
+function enableSelection() {
+    answers.forEach((answer) => (answer.style.pointerEvents = "auto"));
+    players.forEach((player) => (player.style.pointerEvents = "auto"));
+}
+
+function isAnswerSelected() {
+    return Array.from(answers).some((answer) =>
+        answer.classList.contains("selected-answer")
+    );
 }
 
 selectPlayer();
@@ -79,10 +138,8 @@ cells.forEach((cell, index) => {
 
 
 function handleCellClick(cell, index) {
-    if (! isGameActive || board[index] !== "" || ! isGameStarted) 
+    if (board[index] !== "" || !isGameStarted) 
         return;
-    
-
 
     if (isAi) {
         players.forEach(player => {
@@ -90,37 +147,33 @@ function handleCellClick(cell, index) {
                 currentPlayer = player.textContent
             }
         })
+        setTimeout(aiMove, 1000);
     }
 
 
-    if (currentPlayer != "" || ! isAi) {
-        debugger
+    if (currentPlayer != "" || !isAi) {
         board[index] = currentPlayer;
         cell.textContent = currentPlayer;
 
         if (checkWinner()) {
             statusText.textContent = `Winner: ${currentPlayer}`;
-            isGameActive = false;
             launchConfetti();
             return;
         }
 
         if (board.every(val => val !== "")) {
             statusText.textContent = "It's a draw!";
-            isGameActive = false;
             return;
         }
         currentPlayer = currentPlayer === "X" ? "O" : "X";
         statusText.textContent = `Turn: ${currentPlayer}`;
 
-    }
-    if (isAi) {
-        setTimeout(aiMove, 1000);
+
     }
 }
 
 function aiMove() {
-    if (! isGameActive) 
+    if (!isGameStarted) 
         return;
     
 
@@ -138,14 +191,12 @@ function aiMove() {
 
     if (checkWinner()) {
         statusText.textContent = `Winner: ${currentPlayer}`;
-        isGameActive = false;
         launchConfetti();
         return;
     }
 
     if (board.every(val => val !== "")) {
         statusText.textContent = "It's a draw!";
-        isGameActive = false;
         return;
     }
 
@@ -198,12 +249,12 @@ function resetGame() {
         "",
         ""
     ];
-    isGameActive = true;
     cells.forEach(cell => cell.textContent = "");
-    players.forEach(player => player.classList.remove("selected-player"))
+    players.forEach(player => player.classList.remove("selected-player"));
+    answers.forEach(a=>a.classList.remove("selected-answer"));
     statusText.textContent = ""
     isGameStarted = false;
-
+    enableSelection();
 }
 
 function launchConfetti() {
